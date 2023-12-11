@@ -79,3 +79,13 @@ a {
   transition: 0.7s;
   color: black;
 }
+
+.header-container {
+  margin: 35px 0px;
+}
+.hed {
+  color: #fff;
+  margin-left: 15px;
+  font-size: 25px;
+
+}
