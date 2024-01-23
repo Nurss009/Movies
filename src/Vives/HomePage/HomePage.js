@@ -27,7 +27,7 @@ const HomePage = () => {
     return (
    <>
        <Carousel movies={movies} />
-       <div className={'container'}>
+       <div className={'container hed-navigation'}>
            <MoveList movies={movies}/>
            <Pagination onClick={handleChange}/>
        </div></>
@@ -35,3 +35,4 @@ const HomePage = () => {
 }
 
 export default HomePage
+

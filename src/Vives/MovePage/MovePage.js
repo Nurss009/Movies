@@ -4,7 +4,6 @@ import axios from "axios";
 import {API_KEY, IMAGE_URL} from "../../config/config";
 
 
-
 const MovePage = () => {
     const {id} = useParams()
     const [move, setMove] = useState([])

@@ -29,10 +29,8 @@ const Carousel =({movies}) => {
                     movies.map(el => (
                        <SwiperSlide>
                            <div className={'carousel-img'}
-                               // style={{background: `url(${BACKDROP_URL + movie.background_path})`}}
                            >
                                <img src={BACKDROP_URL + el.backdrop_path} alt={el.title}/>
-                               {/*<img className={'Crosel'} src={BACKDROP_URL + el.backdrop_path} alt=""/>*/}
                            </div>
                        </SwiperSlide>
                     ))
@@ -49,17 +47,3 @@ export default Carousel
 
 
 
-
-
-{/*{*/}
-{/*    movies.filter(el => el.background_path).map(movie => {*/}
-{/*        return (*/}
-{/*            <SwiperSlide>*/}
-{/*                /!*<div className={'carosel-img'}*!/*/}
-{/*                /!*style={{background: `url(${BACKDROP_URL+movie.backdrop_path})`}}>*!/*/}
-{/*                    <img src={BACKDROP_URL + movie.background_path} alt=""/>*/}
-{/*                /!*</div>*!/*/}
-{/*            </SwiperSlide>*/}
-{/*        )*/}
-{/*    })*/}
-{/*}*/}

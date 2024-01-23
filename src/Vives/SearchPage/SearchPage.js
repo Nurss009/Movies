@@ -1,45 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import axios from "axios";
-import MoveList from "../../Components/MoveList/MoveList";
+import {API_KEY, BACKDROP_URL, BASE_URL, IMAGE_URL} from "../../config/config";
 import Layout from "../../Components/Layout/Layout";
-import { API_KEY, BACKDROP_URL, BASE_URL } from "../../config/config";
 
-const MoviePage = () => {
-    const { id } = useParams();
-    const [movie, setMovie] = useState({});
 
-    useEffect(() => {
-        axios(`${BASE_URL}movie/${id}?api_key=${API_KEY}&language=ru-RU`)
-            .then(({ data }) => {
-                setMovie(data);
-            });
-    }, []);
+const SearchPage = () => {
+  const [search, setSearch]=useState('')
+    const [searchResults,setSearchResults] = useState([]);
 
-    return (
-        <Layout>
-            <section className={'moviePage'}>
-                <div
-                    style={{
-                        backgroundImage: `url(${BACKDROP_URL}${movie.backdrop_path})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        width: '100%',
-                    }}
-                >
-                    <h1>{movie.title}</h1>
-                </div>
-                {movie && (
-                    <div key={movie.id}>
-                        <img className={'backdrop'} src={`${BACKDROP_URL + movie.backdrop_path}`} alt="" />
-                        <h2>{movie.title}</h2>
-                        <p>{movie.overview}</p>
-                        <p>{movie.release_date}</p>
+
+  const handleSearch =() => {
+      axios.get(`${BASE_URL}search/movie?api_key=${API_KEY}&language=ru-RU&query=${search}`)
+        .then(({ data }) => {
+              setSearchResults(data.results);
+          });
+  }
+
+  return(
+        <div className={'container'}>
+            <h2>Найти фильм</h2>
+            <div className={'search-cont'}>
+                <input className={'input'} placeholder={'Поиск'} type="text" onChange={(e)=> setSearch(e.target.value)}/>
+                <button className={'SearhButton'} onClick={handleSearch}>Найти</button>
+            </div>
+
+            {
+                searchResults.map((movie)=>(
+                    <div key={movie.id} className={'row'}>
+                        <div className="col-3">
+                            <img className={'imgshka'} src={`${IMAGE_URL}${movie.poster_path}`} alt=""/>
+                            <h3>{movie.title}</h3>
+                            <p className={'data'}>{movie.release_date}</p>
+                        </div>
+                        <div className="col-6">
+                            <h1>{movie.title}</h1>
+                            <div className={'inner-box'}>
+                                <h2>О Фильме</h2>
+                                <span>{movie.overview}</span>
+                                <Link to={`/moves/${movie.id}`}>
+                                    <button className={'Vives'}>Смотреть фильм</button>
+                                </Link>
+                                {/*<p className={'rating'}>{movie.vote_average}</p>*/}
+                                <p className={'popularity'}>{movie.popularity} оценки</p>
+                            </div>
+                        </div>
+                        {/*<div className="col-3 ">*/}
+
+                        {/*</div>*/}
+
                     </div>
-                )}
-            </section>
-        </Layout>
-    );
-};
+                ))
 
-export default MoviePage;
+            }
+
+        </div>
+    )
+}
+export default SearchPage
